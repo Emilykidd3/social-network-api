@@ -15,6 +15,6 @@ router
 // get user by id /api/users/:id
 router
     .route('/:id')
-    .get(getUserById)
+    .get(getUserById);
 
 module.exports = router;
