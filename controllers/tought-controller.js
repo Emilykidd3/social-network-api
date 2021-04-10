@@ -49,8 +49,8 @@ const thoughtController = {
     // put / update thought by id
     updateThought( { params, body }, res) {
         Thought.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
-            .then(dbUserData => {
-                if (!dbUserData) {
+            .then(dbThoughtData => {
+                if (!dbThoughtData) {
                     res.status(404).json({ message: 'No user found with this id!' });
                     return;
                 }
@@ -65,12 +65,53 @@ const thoughtController = {
     // delete a thought by id
     deleteThought({ params }, res) {
         Thought.findOneAndDelete({ _id: params.id })
-            .then(dbUserData => {
-                if (!dbUserData) {
+            .then(dbThoughtData => {
+                if (!dbThoughtData) {
                     res.status(404).json({ message: 'No user found with this id!' });
                     return;
                 }
                 res.json({ message: 'Thought deleted!'})
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            })
+    },
+
+    // post a reaction stored in a single thoughts reactions array field
+    createReaction({ params, body }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.id },
+            { $push: { reactions: body } },
+            { new: true, runValidators: true }
+        )
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'No thought found with this id!' });
+                    return;
+                }
+                res.json({ message: 'Reaction created!'})
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            })
+    },
+
+    // delete/ pull a reaction by the reactions id value
+    removeReaction({ params }, res) {
+        console.log(params)
+        Thought.findOneAndUpdate(
+            { _id: params.id },
+            { $pull: { reactions: { reactionId: params.reactionid} } },
+            { new: true, runValidators: true }
+        )
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'No thought found with this id!' });
+                    return;
+                }
+                res.json({ message: 'Reaction deleted!'})
             })
             .catch(err => {
                 console.log(err);
