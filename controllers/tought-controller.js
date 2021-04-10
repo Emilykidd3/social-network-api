@@ -3,9 +3,9 @@ const { removeFriend } = require('./user-controller');
 
 const thoughtController = {
     // get all thoughts
-    // getAllThoughts({ params, body }, res) {
+    getAllThoughts({ params, body }, res) {
 
-    // }
+    },
 
     // get one thought by id
 
