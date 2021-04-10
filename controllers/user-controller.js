@@ -1,4 +1,6 @@
+const { createSecureServer } = require('node:http2');
 const { User } = require('../models');
+const { db } = require('../models/User');
 
 const userController = {
     // get all users
@@ -35,6 +37,13 @@ const userController = {
                 console.log(err);
                 res.status(500).json(err);
             })
+    },
+
+    // Post a new user
+    createUser({ body }, res) {
+        User.create(body)
+            .then(dbUserData => res.json(dbUserData))
+            .catch(err => res.status(500).json(err));
     }
 }
 
