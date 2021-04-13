@@ -13,7 +13,7 @@ Clone the respository onto your machine, and run `npm i` and `npm init` in your 
 * Mongoose
 
 ### Video Walk Through
-[link]()
+[link](https://drive.google.com/file/d/1huw13Gc-CHNqH7qL8DwkO82jiN6pCYJR/view)
 
 ### Contribution
 Made by Emily Kidd
